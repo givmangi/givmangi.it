@@ -83,6 +83,8 @@
         }
 
         .navigation {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0.3;
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -94,6 +96,11 @@
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .navigation:hover{
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .nav-btn {
@@ -240,7 +247,7 @@
             margin: 10px 0;
         }
 
-        .mentions{
+        .doesntfit{
             width: 100%;
             height: 30px;
             background: #e0e0e0;
@@ -253,8 +260,18 @@
             padding-right: 10px;
             font-weight: bold;
             flex-wrap: nowrap;
+        }
+
+        .cescomponent{
+            color: orange;
+            justify-content: flex-start;
+            gap: 4px;
+        }
+
+        .mentions {
             color: #55269c;
         }
+
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
@@ -535,7 +552,8 @@
 
             <div class="finding-box">
                 <h3 style="text-align: center; color: #6A4C93;">
-                    Pattern Generazionale nell'Affiliazione Accademica
+                    "L'Accademia non abbassa i propri standard per i giovani,<br>
+                    innalza i giovani ai propri standard"
                 </h3>
             </div>
 
@@ -646,8 +664,9 @@
                 </div>
                 <div class="card" style="text-align: center;">
                     <h4>Membership</h4>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 16.3%; background: #FF8C00;">16.3%</div>
+                    <div class="progress-bar doesntfit cescomponent">
+                        <div class="progress-fill" style="width: 16.3%; background: orange;"></div>
+                        16.3%
                     </div>
                     <p style="color: orange; font-weight: bold;">Margini di crescita</p>
                 </div>
@@ -742,7 +761,7 @@
                     <tr>
                         <td><strong>Invito socio/a</strong></td>
                         <td>
-                            <div class="progress-bar mentions" style="height: 20px;">
+                            <div class="progress-bar doesntfit mentions" style="height: 20px;">
                                 <div class="progress-fill" style="width: 25%;"></div>
                                 25.0%
                             </div>
@@ -753,7 +772,7 @@
                     <tr>
                         <td><strong>Newsletter</strong></td>
                         <td>
-                            <div class="progress-bar mentions" style="height: 20px;">
+                            <div class="progress-bar doesntfit mentions" style="height: 20px;">
                                 <div class="progress-fill" style="width: 21.2%;"></div>
                                 21.2%
                             </div>
@@ -764,7 +783,7 @@
                     <tr>
                         <td><strong>Passaparola</strong></td>
                         <td>
-                            <div class="progress-bar mentions" style="height: 20px;">
+                            <div class="progress-bar doesntfit mentions" style="height: 20px;">
                                 <div class="progress-fill" style="width: 15.4%;"></div>
                                 15.4%
                             </div>
@@ -775,7 +794,7 @@
                     <tr>
                         <td><strong>Sito web</strong></td>
                         <td>
-                            <div class="progress-bar mentions" style="height: 20px;">
+                            <div class="progress-bar doesntfit mentions" style="height: 20px;">
                                 <div class="progress-fill" style="width: 5.8%; background: #DC143C;"></div>
                                 5.8%
                             </div>
@@ -1292,7 +1311,7 @@
                             ✅ <strong>CES sviluppato:</strong> Prima metrica composita per l'engagement culturale
                         </p>
                         <p style="margin: 20px 0;">
-                            ✅ <strong>Scoperte empiriche:</strong> 3 pattern significativi identificati e quantificati
+                            ✅ <strong>Scoperte empiriche:</strong> Pattern significativi identificati e quantificati
                         </p>
                         <p style="margin: 20px 0;">
                             ✅ <strong>Framework replicabile:</strong> Codice e metodologia disponibili per il futuro
@@ -1301,19 +1320,15 @@
                 </div>
 
                 <div class="emphasis" style="margin-top: 40px; font-size: 1.5em;">
-                    "Questo lavoro dimostra come metodologie quantitative rigorose<br>
-                    possano fornire insights profondi anche in contesti culturali tradizionali"
+                    Questo lavoro dimostra come metodologie quantitative rigorose<br>
+                    possano fornire insights profondi anche in contesti culturali tradizionali
                 </div>
-
-                <p style="margin-top: 40px; font-size: 1.2em; color: #666;">
-                    Grazie per l'attenzione
-                </p>
             </div>
         </div>
         <div class="slide">
             <div class="logo">Accademia Roveretana degli Agiati</div>
             <div class="slide-number">16/16</div>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <h1 style="font-size: 3em; text-align: center; margin-bottom: 40px;">
                     Grazie per l'attenzione
                 </h1>
@@ -1326,21 +1341,21 @@
                         Per qualsiasi domanda, curiosità o per discutere i risultati:
                         <br>
                         <strong style="font-size: 1.1em; color: #4A2C70;">
-                            contattatemi a: nome.cognome@email.com
+                            <a href="mailto:info@givmangi.it" style="text-decoration: none; color: #4A2C70;">info@givmangi.it</a>
                         </strong>
                     </p>
                 </div>
                 <div class="emphasis" style="margin-top: 30px; width: 80%;">
-                    <span class="icon" style="font-size: 1.5em;">💻</span>
-                    Il codice sorgente Python utilizzato per l'analisi statistica, la validazione bootstrap e la generazione dei grafici è interamente open source e disponibile su GitHub.
+                    Il codice sorgente Python utilizzato per l'analisi statistica, la validazione bootstrap e altro è interamente open source e disponibile su GitHub.
                     <br>
-                    <a href="https://github.com/tuo-username/analisi-agiati" target="_blank" rel="noopener noreferrer" style="color: #6A4C93; font-weight: bold; text-decoration: none; display: block; margin-top: 15px; font-size: 1.2em;">
-                        github.com/tuo-username/analisi-agiati
+                    <a href="https://github.com/givmangi/data_analysis_questionari_accademia_agiati" target="_blank" rel="noopener noreferrer" style="color: #6A4C93; font-weight: bold; text-decoration: none; display: block; margin-top: 15px; font-size: 1.2em;">
+                        <img class="icon" src="img/github-logo.png" alt="Github logo" style="max-width: 32px; height: auto; border-radius: 10px;">
+                        github.com/givmangi/data_analysis_questionari_accademia_agiati
                     </a>
                 </div>
                 
                 <p style="margin-top: 40px; font-size: 1.2em; color: #666;">
-                    Nome Cognome
+                    Giuseppe Pio Mangiacotti
                 </p>
             </div>
         </div>
