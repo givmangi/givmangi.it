@@ -215,6 +215,22 @@
             background: #f5f5f5;
         }
 
+        .ticked {
+        list-style: none;
+        margin-left: 0;
+        padding-left: 0;
+        }
+
+        .ticked li {
+        padding-left: 1em;
+        text-indent: -1em;
+        }
+
+        .ticked li:before {
+        content: "✓";
+        padding-right: 5px;
+        }
+
         .progress-bar {
             width: 100%;
             height: 30px;
@@ -1202,19 +1218,19 @@
             </div>
 
             <div class="grid-2">
-                <div class="finding-box">
+                <div class="finding-box ">
                     <h3>📊 Contributi Metodologici</h3>
-                    <ul>
-                        <li>✓ Sviluppo del Cultural Engagement Score</li>
-                        <li>✓ Framework di analisi multidimensionale</li>
-                        <li>✓ Codice Python riutilizzabile (open source)</li>
-                        <li>✓ Metodologia statistica rigorosa</li>
-                        <li>✓ Sistema di validazione bootstrap</li>
+                    <ul class="ticked">
+                        <li> Sviluppo del Cultural Engagement Score</li>
+                        <li> Framework di analisi multidimensionale</li>
+                        <li> Codice Python riutilizzabile (open source)</li>
+                        <li> Metodologia statistica rigorosa</li>
+                        <li> Sistema di validazione bootstrap</li>
                     </ul>
                 </div>
-                <div class="finding-box">
+                <div class="finding-box ">
                     <h3>🔬 Scoperte Empiriche</h3>
-                    <ul>
+                    <ul class ="ticked">
                         <li>✓ Paradosso digitale quantificato (OR=6.5)</li>
                         <li>✓ Pipeline generazionale mappata</li>
                         <li>✓ Efficacia canali comunicativi misurata</li>
