@@ -71,14 +71,13 @@
         }
         @keyframes fade-out { from {transform:scale(1);opacity:1} to {transform:scale(0);opacity:0} }
 
-        /* --- NUOVO: STILI SPECIFICI PER DISPOSITIVI MOBILI --- */
         @media (max-width: 768px) {
             .main-container h1 { font-size: 12vw; text-shadow: 2px 2px 0 #FF00DE, 4px 4px 0 #00F6FF; }
             .main-container h2 { font-size: 15vw; text-shadow: -2px -2px 0 #FFC300, -4px -4px 0 #C70039; }
             .main-container p { font-size: 5vw; }
             .giuseppe-image { width: 60vw; box-shadow: 0 0 15px 5px #fff, 0 0 25px 10px #f0f; }
             .flyer { font-size: 40px; }
-            .marquee { font-size: 6vw; }
+            .marquee { font-size: 6vw; animation: marquee-scroll 10s linear infinite; }
             .flyer:nth-child(n+5) { display: none; }
         }
     </style>
