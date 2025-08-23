@@ -8,6 +8,23 @@
         /* Un font volutamente "brutto" per l'effetto trash */
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
+        .marquee {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            font-size: 4vw;
+            color: yellow;
+            text-shadow: 2px 2px 2px red;
+            white-space: nowrap;
+            animation: marquee-scroll 15s linear infinite;
+        }
+
+        @keyframes marquee-scroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+
         body, html {
             height: 100%;
             margin: 0;
@@ -56,6 +73,22 @@
                 9px 9px 0 #5EFF00;
         }
 
+        .mouse-trail {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('img/giuseppe.webp'); /* Usiamo la faccia di Giuseppe! */
+            background-size: cover;
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none; /* Per non bloccare i click */
+            animation: fade-out 1s linear;
+        }
+
+        @keyframes fade-out {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0); opacity: 0; }
+        }
         .main-container h2 {
             font-size: 8vw;
             margin: 0;
@@ -107,6 +140,14 @@
             font-size: 50px; /* Dimensione delle emoji */
             animation: fly-across linear infinite;
         }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .blinking-text {
+            animation: blink 0.8s linear infinite;
+        }
         
         /* Definiamo diverse animazioni per rendere il tutto più caotico */
         @keyframes fly-across {
@@ -145,14 +186,51 @@
         <div class="flyer">✨</div>
         <div class="flyer">🐸</div>
         <div class="flyer">🦄</div>
+        <div class="flyer">🍐</div>
     </div>
 
     <div class="main-container">
+        <marquee behavior="scroll" direction="left">BUONGIORNO DA GIUSEPPE!</marquee>
+        <div class="marquee">
+            <span>!!! GIUSEPPE È QUI PER VOI !!! SEI IL VISITATORE NUMERO 1 !!! CLICCA OVUNQUE !!! </span>
+            <span>!!! GIUSEPPE È QUI PER VOI !!! SEI IL VISITATORE NUMERO 1 !!! CLICCA OVUNQUE !!! </span>
+        </div>
         <h1>BUONGIORNO</h1>
         <p>questo è</p>
         <img src="img/giuseppe.webp" alt="Giuseppe la Pera" class="giuseppe-image">
-        <h2>GIUSEPPE</h2>
+        <h2 class="blinking-text">GIUSEPPE</h2>
+        <audio id="lemmeno" autoplay loop muted>
+            <source src="audio/lemmeno.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="click-sound" src="audio/click.mp3"></audio>
+
     </div>
 
 </body>
+<script>
+    window.onload = function() {
+        const audio = document.getElementById('lemmeno');
+        audio.muted = false;
+        alert("BUONGIORNO DA GIUSEPPE!"); 
+        document.addEventListener('click', function() {
+            audio.play();
+            document.getElementById('click-sound').play(); // Aggiungi questa linea
+        });
+    };
+
+
+    document.addEventListener('mousemove', function(e) {
+    let trail = document.createElement('div');
+    trail.className = 'mouse-trail';
+    trail.style.left = e.pageX + 'px';
+    trail.style.top = e.pageY + 'px';
+    document.body.appendChild(trail);
+
+    setTimeout(() => {
+        trail.remove();
+    }, 1000); // La scia scompare dopo 1 secondo
+});
+
+
+</script>
 </html>
