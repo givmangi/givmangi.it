@@ -65,7 +65,7 @@
         .blinking-text { animation: blink 0.8s linear infinite; }
         
         .mouse-trail {
-            position: absolute; width: 50px; height: 50px; background-image: url('img/giuseppe.webp');
+            position: absolute; width: 50px; height: 50px; background-image: url('img/hormse.gif');
             background-size: cover; border-radius: 50%; z-index: 9999; pointer-events: none;
             animation: fade-out 1s linear;
         }
@@ -116,7 +116,6 @@
         });
     };
 
-    // --- NUOVO: GESTIONE SCIA PAZZA (MOUSE + TOUCH) ---
     function createTrail(x, y) {
         let trail = document.createElement('div');
         trail.className = 'mouse-trail';
@@ -128,14 +127,12 @@
     document.addEventListener('mousemove', e => createTrail(e.pageX, e.pageY));
     document.addEventListener('touchmove', e => createTrail(e.touches[0].pageX, e.touches[0].pageY));
 
-    // --- NUOVO: EFFETTO GIROSCOPIO PER MOBILE ---
     function handleOrientation(event) {
         const beta = event.beta; const gamma = event.gamma;
         const giuseppe = document.querySelector('.giuseppe-image');
         if (giuseppe && beta !== null && gamma !== null) {
             const tiltY = Math.max(-25, Math.min(25, beta)); 
             const tiltX = Math.max(-25, Math.min(25, gamma));
-            // Rimuoviamo l'animazione di rotazione per non interferire con il giroscopio
             giuseppe.style.animation = 'none'; 
             giuseppe.style.transform = `perspective(500px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
         }
