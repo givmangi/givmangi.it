@@ -1342,6 +1342,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Slide 16: Ringraziamenti & info -->
         <div class="slide">
             <div class="logo">Accademia Roveretana degli Agiati</div>
             <div class="slide-number">16/16</div>
@@ -1370,8 +1372,6 @@
                         github.com/givmangi/data_analysis_questionari_accademia_agiati
                     </a>
                 </div>
-
-
                     <strong>Giuseppe Pio Mangiacotti</strong>
                 </p>
             </div>
@@ -1408,14 +1408,22 @@
             showSlide(currentSlide);
         }
 
+        //keyboard scroll
+        function scrollSlide(direction) {
+            const quantity = 400;
+            const activeSlide = document.querySelector('.slide.active');
+            activeSlide.scrollBy({ top: direction * quantity, behavior: 'smooth' });
+        }
+
         function printPresentation() {
             window.print();
         }
-
-        // Keyboard navigation
+        // Keyboard nav
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') changeSlide(1);
             if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowDown') scrollSlide(direction = 1);
+            if (e.key === 'ArrowUp') scrollSlide(direction = -1);
             if (e.key === 'Home') {
                 currentSlide = 0;
                 showSlide(currentSlide);
@@ -1425,8 +1433,6 @@
                 showSlide(currentSlide);
             }
         });
-
-        // Touch/swipe support for mobile
         let touchStartX = 0;
         let touchEndX = 0;
 
