@@ -8,15 +8,24 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
         
-        body, html {
-            height: 100%; margin: 0; padding: 0; overflow: hidden;
-            font-family: 'Comic Neue', cursive;
-            touch-action: none; 
+        body {
+            height: 100%;
             background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
             background-size: 400% 400%;
+            animation: wobble 1s linear infinite;
             animation: psychedelic-bg 10s ease infinite;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Comic Neue', cursive;
+            cursor: url('img/cursor.png'), auto;
         }
-        @keyframes psychedelic-bg { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes psychedelic-bg { 
+            0%{background-position:0% 50%} 
+            50%{background-position:100% 50%} 
+            100%{background-position:0% 50%} 
+        }
 
         .main-container {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -48,6 +57,12 @@
         .flying-stuff-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
         .flyer { position: absolute; font-size: 50px; }
         
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg) skewX(0deg); }
+            25% { transform: rotate(-2deg) skewX(5deg); }
+            75% { transform: rotate(2deg) skewX(-5deg); }
+        }
+
         @keyframes fly-across { 0%{transform:translateX(-100px) rotate(0deg);top:10%} 100%{transform:translateX(110vw) rotate(720deg);top:90%} }
         @keyframes fly-across-2 { 0%{transform:translateX(110vw) rotate(0deg);top:20%} 100%{transform:translateX(-100px) rotate(-360deg);top:70%} }
         @keyframes fly-across-3 { 0%{transform:translateY(-100px) rotate(0deg);left:50%} 100%{transform:translateY(110vh) rotate(1080deg);left:40%} }
@@ -82,9 +97,20 @@
             .marquee { font-size: 6vw; animation: marquee-scroll 10s linear infinite; }
             .flyer:nth-child(n+5) { display: none; }
         }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+        }
     </style>
 </head>
 <body>
+<canvas id="matrix-canvas"></canvas>
+
 
     <div class="flying-stuff-container">
         <div class="flyer">🍕</div> <div class="flyer">😂</div> <div class="flyer">👽</div> <div class="flyer">💩</div> <div class="flyer">✨</div> <div class="flyer">🐸</div> <div class="flyer">🦄</div> <div class="flyer">🍐</div>
@@ -104,6 +130,44 @@
 
 </body>
 <script>
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const nums = '0123456789';
+    const alphabet = katakana + latin + nums;
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const rainDrops = [];
+
+    for (let x = 0; x < columns; x++) {
+        rainDrops[x] = 1;
+    }
+
+    const drawMatrix = () => {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0F0'; // Colore Verde Matrix
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < rainDrops.length; i++) {
+            const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                rainDrops[i] = 0;
+            }
+            rainDrops[i]++;
+        }
+    };
+
+    setInterval(drawMatrix, 33);
     var clicks = 0;
     window.onload = function() {
         const audio = document.getElementById('lemmeno');
@@ -114,8 +178,43 @@
             audio.play();
             if (clicks % 4 == 0) { document.getElementById('ohmaga').play(); }
             else { document.getElementById('oh').play(); }
+            createPearExplosion(e.pageX, e.pageY);
+
         });
     };
+
+    function createPearExplosion(x, y) {
+        const explosionSize = 10; //peratà
+        for (let i = 0; i < explosionSize; i++) {
+            const pear = document.createElement('img');
+            pear.src = 'img/giuseppe.webp';
+            pear.style.position = 'absolute';
+            pear.style.left = x + 'px';
+            pear.style.top = y + 'px';
+            pear.style.width = '50px';
+            pear.style.height = 'auto';
+            pear.style.zIndex = '10000';
+            pear.style.pointerEvents = 'none';
+            pear.style.transition = 'all 1s ease-out';
+            document.body.appendChild(pear);
+
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.random() * 200 + 100;
+            const targetX = x + Math.cos(angle) * radius;
+            const targetY = y + Math.sin(angle) * radius;
+
+            setTimeout(() => {
+                pear.style.left = targetX + 'px';
+                pear.style.top = targetY + 'px';
+                pear.style.transform = 'scale(0) rotate(720deg)';
+                pear.style.opacity = '0';
+            }, 10);
+
+            setTimeout(() => {
+                pear.remove();
+            }, 1000);
+        }
+    }
 
     function createTrail(x, y) {
         let trail = document.createElement('div');
@@ -147,5 +246,6 @@
     } else {
         window.addEventListener('deviceorientation', handleOrientation);
     }
+
 </script>
 </html>
