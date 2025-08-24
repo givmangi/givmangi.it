@@ -8,19 +8,22 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
         
-        body {
+            html {
             height: 100%;
             background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
             background-size: 400% 400%;
-            animation: wobble 1s linear infinite;
             animation: psychedelic-bg 10s ease infinite;
+        }
+
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
             font-family: 'Comic Neue', cursive;
+            animation: wobble 1s linear infinite; /* Il wobble rimane qui */
             cursor: url('img/cursor.png'), auto;
-        }
+        }       
         @keyframes psychedelic-bg { 
             0%{background-position:0% 50%} 
             50%{background-position:100% 50%} 
@@ -160,7 +163,7 @@
             const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
             ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
-            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.225) {
                 rainDrops[i] = 0;
             }
             rainDrops[i]++;
