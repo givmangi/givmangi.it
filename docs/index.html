@@ -108,6 +108,7 @@
             width: 100%;
             height: 100%;
             z-index: 1; 
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -153,8 +154,8 @@
     }
 
     const drawMatrix = () => {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = '#0F0'; // Colore Verde Matrix
         ctx.font = fontSize + 'px monospace';
@@ -163,7 +164,7 @@
             const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
             ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
-            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.225) {
+            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                 rainDrops[i] = 0;
             }
             rainDrops[i]++;
