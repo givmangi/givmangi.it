@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/giuseppe.webp">
     <title>BUONGIORNO DA GIUSEPPE</title>
     <style>
@@ -108,7 +108,7 @@
             width: 100%;
             height: 100%;
             z-index: 1; 
-            transform: scale(1.5);
+            transform: scale(1.5) !important;
         }
     </style>
 </head>
@@ -186,6 +186,15 @@
 
         });
     };
+
+    window.addEventListener('wheel', event => {
+        event.preventDefault();
+    }, { passive: false });
+
+    // Blocca lo scroll del tocco su mobile
+    window.addEventListener('touchmove', event => {
+        event.preventDefault();
+    }, { passive: false });
 
     function createPearExplosion(x, y) {
         const explosionSize = 10; //peratà
