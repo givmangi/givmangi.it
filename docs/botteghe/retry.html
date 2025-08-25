@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Shops in Trentino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amarante:wght@400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 60px 0;
+        }
+
+        .section-green {
+            background: linear-gradient(135deg, #bcdacb 0%, #a8d5ba 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-purple {
+            background: linear-gradient(135deg, #7e52da 0%, #6b46c1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-orange {
+            background: linear-gradient(135deg, #ffba66 0%, #ff9f43 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-pink {
+            background: linear-gradient(135deg, #ff8fbf 0%, #ff6b9d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-image {
+            background: linear-gradient(rgba(18, 17, 17, 0.5), rgba(18, 17, 17, 0.3)), url('https://cdn.vev.design/cdn-cgi/image/f=auto,q=82,w=1280/private/LEeuIpPLdYUuFvmUFR635hyPGmk2/image/y59EB9FrrY.png') no-repeat center center / cover;
+            position: relative;
+        }
+
+        /* Animated background patterns */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            33% { transform: translateX(-20px) translateY(-30px); }
+            66% { transform: translateX(20px) translateY(30px); }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            height: 89px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            height: 70px;
+        }
+
+        .header h1 {
+            font-family: 'Amarante', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .landmark-icon {
+            width: 40px;
+            height: 40px;
+            fill: #fff;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)); }
+        }
+
+        /* Typography with enhanced effects */
+        h1 {
+            font-size: clamp(60px, 8vw, 118px);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -4.7px;
+            line-height: 1.1;
+            text-align: center;
+            margin: 30px 0;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, currentColor, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: clamp(28px, 4vw, 57px);
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -2.5px;
+            line-height: 1.1;
+            text-align: center;
+            margin: 22px 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        h3 {
+            font-size: clamp(32px, 5vw, 76px);
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -2.2px;
+            color: #fff;
+            text-align: center;
+            border: 3px solid #fff;
+            padding: 20px;
+            margin: 20px 0;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+            box-shadow: 0 0 50px rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 50px rgba(255,255,255,0.2); }
+            50% { box-shadow: 0 0 80px rgba(255,255,255,0.4); }
+        }
+
+        p {
+            font-size: clamp(18px, 2vw, 24px);
+            line-height: 1.5;
+            margin: 14px 0;
+            text-align: center;
+            max-width: 800px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .large-text {
+            font-size: clamp(50px, 7vw, 105px);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            color: #f99830;
+            text-align: center;
+            text-shadow: 0 0 40px rgba(249, 152, 48, 0.6);
+            animation: textGlow 3s ease-in-out infinite;
+            /* Fix the text visibility issue */
+            -webkit-text-fill-color: #f99830;
+            background: none;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 40px rgba(249, 152, 48, 0.6); }
+            50% { text-shadow: 0 0 80px rgba(249, 152, 48, 0.9), 0 0 120px rgba(249, 152, 48, 0.4); }
+        }
+
+        .white-text {
+            color: #fff;
+        }
+
+        /* Super Enhanced Animated Text */
+        .animated-text-container {
+            position: relative;
+            display: inline-block;
+            perspective: 1000px;
+        }
+
+        .animated-text {
+            font-size: clamp(60px, 8vw, 118px);
+            font-weight: 600;
+            font-family: 'Poppins', monospace;
+            color: #2f4f4f;
+            display: inline-block;
+            position: relative;
+            background: linear-gradient(45deg, #2f4f4f, #4a7c59, #2f4f4f);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .text-change-animation {
+            animation: textFlip 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+
+        @keyframes textFlip {
+            0% { 
+                transform: rotateY(0deg) scale(1);
+                opacity: 1;
+            }
+            25% { 
+                transform: rotateY(90deg) scale(0.8);
+                opacity: 0;
+            }
+            75% { 
+                transform: rotateY(-90deg) scale(0.8);
+                opacity: 0;
+            }
+            100% { 
+                transform: rotateY(0deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Counter */
+        .counter {
+            font-size: clamp(80px, 10vw, 138px);
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            text-shadow: 0 0 50px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .counter::before {
+            content: attr(data-count);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            color: rgba(255,255,255,0.1);
+            transform: translate(3px, 3px);
+            z-index: -1;
+        }
+
+        /* Floating Images with Enhanced Effects */
+        .floating-image {
+            position: absolute;
+            animation: advancedFloat 8s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .floating-image:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.4));
+        }
+
+        .floating-image.left {
+            left: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation-delay: -2s;
+        }
+
+        .floating-image.right {
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation-delay: -4s;
+        }
+
+        .floating-image img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes advancedFloat {
+            0%, 100% { 
+                transform: translateY(-50%) translateX(0) rotate(0deg);
+            }
+            25% { 
+                transform: translateY(-60%) translateX(10px) rotate(2deg);
+            }
+            50% { 
+                transform: translateY(-40%) translateX(20px) rotate(-1deg);
+            }
+            75% { 
+                transform: translateY(-55%) translateX(5px) rotate(1deg);
+            }
+        }
+
+        /* Epic Scrolling Text */
+        .scrolling-text {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 0;
+        }
+
+        .scrolling-text h3 {
+            display: inline-block;
+            animation: epicScroll 20s linear infinite;
+            border: none;
+            padding: 10px 0;
+            background: linear-gradient(90deg, #fff, #ffd700, #fff, #ff69b4, #fff);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: epicScroll 20s linear infinite, textShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes epicScroll {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Enhanced Data Visualization - Integrated */
+        .chart-integrated {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            float: right;
+            margin-left: 30px;
+        }
+
+        .chart-integrated.left {
+            float: left;
+            margin-right: 30px;
+            margin-left: 0;
+        }
+
+        .chart-integrated::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        .chart-integrated p {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            font-size: 14px;
+            z-index: 1;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Text flow around charts */
+        .content-with-chart {
+            display: flow-root;
+            margin: 40px 0;
+        }
+
+        /* Large visual chart for main sections */
+        .chart-hero {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .chart-placeholder p {
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            font-size: 18px;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Enhanced Gallery */
+        .shop-gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .shop-item {
+            min-width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shop-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .shop-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .shop-item:hover {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .shop-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .shop-item:hover .shop-icon {
+            transform: rotate(360deg) scale(1.2);
+            background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float-particle 10s linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .floating-image {
+                display: none;
+            }
+
+            .shop-gallery {
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .shop-item {
+                min-width: 150px;
+                height: 200px;
+            }
+
+            .shop-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .chart-integrated {
+                float: none !important;
+                margin: 20px auto !important;
+                width: 90%;
+            }
+
+            .chart-integrated.left {
+                float: none !important;
+                margin: 20px auto !important;
+            }
+        }
+
+        /* Enhanced Fade Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Staggered animations */
+        .fade-in:nth-child(1) { transition-delay: 0.1s; }
+        .fade-in:nth-child(2) { transition-delay: 0.2s; }
+        .fade-in:nth-child(3) { transition-delay: 0.3s; }
+        .fade-in:nth-child(4) { transition-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <svg class="landmark-icon" viewBox="0 0 512 512">
+                <path d="M504 480h-24v-80c0-8.8-7.2-16-16-16h-16V256h24c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8h-24c0-100.5-77.6-183-176-191.2V8c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v24.8C141.6 41 64 123.5 64 224H40c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h24v128H48c-8.8 0-16 7.2-16 16v80H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h496c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8zM256 64c88.2 0 160 71.8 160 160H96c0-88.2 71.8-160 160-160zm160 192v128h-80V256h80zm-112 0v128h-96V256h96zm-208 0h80v128H96V256zm352 224H64v-64h384v64z"/>
+            </svg>
+            <h1>Historical Shops in Trentino</h1>
+        </div>
+    </header>
+
+    <!-- Section 1: Introduction -->
+    <section class="section section-green">
+        <div class="particles" id="particles1"></div>
+        <div class="container">
+            <div class="floating-image right">
+                <img src="https://cdn.vev.design/cdn-cgi/image/f=auto,q=82/private/LEeuIpPLdYUuFvmUFR635hyPGmk2/image/5u0mUVLS04.png" alt="Magnifying glass" />
+            </div>
+            <div class="floating-image left">
+                <img src="https://cdn.vev.design/cdn-cgi/image/f=auto,q=82/private/LEeuIpPLdYUuFvmUFR635hyPGmk2/image/k1TY1tBdgo.png" alt="Traditional shop" />
+            </div>
+            
+            <h2 class="fade-in">Progress makes it hard for historical shops to be considered in the frenzy of competition</h2>
+            
+            <h1 class="fade-in">
+                We need<br />
+                history to<br />
+                <div class="animated-text-container">
+                    <span class="animated-text" id="changingText">be remembered</span>
+                </div>
+            </h1>
+        </div>
+    </section>
+
+    <!-- Section 2: The Problem -->
+    <section class="section section-purple">
+        <div class="particles" id="particles2"></div>
+        <div class="container">
+            <div class="counter scale-in" id="counterDisplay" data-count="0">0</div>
+            <p class="white-text fade-in">shops in Trentino faded in the last 10 years</p>
+            
+            <div class="scrolling-text">
+                <h3>MO MONEY, MO PROBLEMS • MO MONEY, MO PROBLEMS • MO MONEY, MO PROBLEMS • MO MONEY, MO PRODUCTS • MO MONEY, MO PRODUCTS •</h3>
+            </div>
+            
+            <h1 class="white-text fade-in">
+                Mo' money<br />
+                Mo' rivals<br />
+                Mo' problems
+            </h1>
+            
+            <h2 class="white-text fade-in">
+                Trentino-Alto Adige is the second region when it comes to sales volume per capita in the whole of Italy, and it makes it difficult for antique shops to keep up with the multi-million businesses that invest on this territory.
+            </h2>
+
+            <div class="content-with-chart fade-in">
+                <div class="chart-integrated">
+                    <p>📊 Revenue per capita<br/>Italy by regions</p>
+                </div>
+                <p class="white-text">
+                    The economic pressure is immense. Large retail chains and international brands flood the market with massive advertising budgets and economies of scale that traditional family-owned shops simply cannot match. This creates an uneven playing field where history and craftsmanship struggle against pure commercial power.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Protection Program -->
+    <section class="section section-orange">
+        <div class="particles" id="particles3"></div>
+        <div class="container">
+            <h3 class="scale-in">So, how do you protect them?</h3>
+            
+            <div class="shop-gallery">
+                <div class="shop-item fade-in">
+                    <div class="shop-icon">🥖</div>
+                    <p>Traditional Bakery</p>
+                </div>
+                <div class="shop-item fade-in">
+                    <div class="shop-icon">📚</div>
+                    <p>Historic Bookstore</p>
+                </div>
+                <div class="shop-item fade-in">
+                    <div class="shop-icon">🔨</div>
+                    <p>Artisan Workshop</p>
+                </div>
+                <div class="shop-item fade-in">
+                    <div class="shop-icon">☕</div>
+                    <p>Family Café</p>
+                </div>
+            </div>
+            
+            <p class="fade-in">
+                In 2011, the municipality of Trento created the program "Botteghe storiche trentine" in order to make historical shops more recognizable and to protect them from the arising competition in the province
+            </p>
+
+            <div class="content-with-chart fade-in">
+                <div class="chart-integrated left">
+                    <p>🗺️ Historical shops<br/>distribution map</p>
+                </div>
+                <div>
+                    <p class="fade-in">
+                        Historical shops are considered to be those retail establishments in fixed premises, public establishments serving food and beverages, and craft enterprises (selling their own products), even if they are located outside the historic places of commerce, which meet specific requirements.
+                    </p>
+                    
+                    <p class="fade-in">
+                        To obtain the certification plate, enterprises must submit an application to their local municipality, proving their historical significance and contribution to the local cultural heritage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Outstanding Outlier -->
+    <section class="section section-pink">
+        <div class="particles" id="particles4"></div>
+        <div class="container">
+            <div class="scrolling-text">
+                <h3>AN OUTSTANDING OUTLIER • AN OUTSTANDING OUTLIER • AN OUTSTANDING OUTLIER • AN OUTSTANDING OUTLIER •</h3>
+            </div>
+            
+            <h1 class="white-text scale-in">There is one municipality that greatly stands out</h1>
+            
+            <div class="chart-hero fade-in">
+                <p>📈 Historical shops by municipality - Primiero leads significantly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Primiero Analysis -->
+    <section class="section section-purple">
+        <div class="particles" id="particles5"></div>
+        <div class="container">
+            <div class="content-with-chart fade-in">
+                <div class="chart-integrated">
+                    <p>🏢 GDO distribution<br/>per km² by valley</p>
+                </div>
+                <div class="content-with-chart fade-in">
+                    <div class="chart-integrated left">
+                        <p>🌍 Foreign tourist<br/>presence rates</p>
+                    </div>
+                    <p class="white-text fade-in">
+                        These graphs reveal something fascinating about Primiero San Martino di Castrozza. This municipality was established on 1 January 2016 by the merger of Fiera di Primiero, Siror, Tonadico and Transacqua, creating a unique economic ecosystem.
+                    </p>
+                </div>
+            </div>
+            
+            <p class="white-text fade-in">
+                The remarkable thing about Primiero is its contrarian approach: while it's a strong tourist attraction, it goes against most regional trends. Most valleys in Trentino see empty shops closing one after another, but Primiero maintains one of the strongest shop "survival rates" in the province. While the rest of Trentino chases foreign investment, Primiero thrives with the lowest foreign visitor rate.
+            </p>
+            
+            <div class="content-with-chart fade-in">
+                <div class="chart-integrated">
+                    <p>📉 Shop variation by valley<br/>2010-2020 comparison</p>
+                </div>
+                <p class="white-text">
+                    This data tells a story of resilience. While other regions hemorrhage local businesses to global chains, Primiero's shops not only survive but flourish. The secret lies in their authentic approach to tourism and commerce.
+                </p>
+            </div>
+            
+            <h1 class="white-text slide-in-left">But how can it be?</h1>
+            
+            <p class="white-text fade-in">
+                Primiero San Martino di Castrozza represents a small municipality that has found success by staying true to its cultural roots. Rather than chasing external investments, it has created a sustainable model where local businesses thrive alongside responsible tourism, proving that authenticity can be more powerful than aggressive modernization.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 6: Conclusion -->
+    <section class="section section-image">
+        <div class="particles" id="particles6"></div>
+        <div class="container">
+            <h1 class="white-text fade-in">
+                You would never open a Starbucks<br />
+                in<br />
+                <div class="animated-text-container">
+                    <span class="large-text" id="finalText">Primiero San Martino di Castrozza</span>
+                </div>
+            </h1>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced Particle System
+        function createParticles(containerId, count = 20) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create particles for each section
+        ['particles1', 'particles2', 'particles3', 'particles4', 'particles5', 'particles6'].forEach(id => {
+            createParticles(id, 15);
+        });
+
+        // Enhanced Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Enhanced Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Add staggered delay for multiple elements
+                    if (entry.target.parentElement) {
+                        const siblings = Array.from(entry.target.parentElement.children)
+                            .filter(el => el.classList.contains('fade-in') || el.classList.contains('scale-in'));
+                        const index = siblings.indexOf(entry.target);
+                        entry.target.style.transitionDelay = (index * 0.1) + 's';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Epic Animated Text Cycling with 3D Effects
+        const textOptions = ["be remembered", "learn", "innovate", "survive", "evolve"];
+        let currentIndex = 0;
+        const changingText = document.getElementById('changingText');
+
+        function epicTextCycle() {
+            changingText.classList.add('text-change-animation');
+            
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % textOptions.length;
+                changingText.textContent = textOptions[currentIndex];
+            }, 400);
+            
+            setTimeout(() => {
+                changingText.classList.remove('text-change-animation');
+            }, 800);
+        }
+
+        setInterval(epicTextCycle, 4000);
+
+        // Enhanced Counter Animation with Sound Effect Simulation
+        function animateCounter() {
+            const counter = document.getElementById('counterDisplay');
+            const target = 630;
+            let current = 0;
+            const increment = target / 120;
+            const duration = 3000;
+            const startTime = Date.now();
+            
+            const updateCounter = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                current = Math.floor(target * easeOutQuart);
+                
+                counter.textContent = current;
+                counter.setAttribute('data-count', current);
+                
+                // Add pulsing effect at milestones
+                if (current % 100 === 0 && current > 0) {
+                    counter.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        counter.style.transform = 'scale(1)';
+                    }, 200);
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    // Final celebration effect
+                    counter.style.animation = 'textGlow 2s ease-in-out 3';
+                }
+            };
+            
+            updateCounter();
+        }
+
+        // Final text cycling with enhanced effects
+        const finalOptions = [
+            "Primiero San Martino di Castrozza", 
+            "Transacqua", 
+            "Siror", 
+            "Tonadico", 
+            "Fiera di Primiero"
+        ];
+        let finalIndex = 0;
+        const finalText = document.getElementById('finalText');
+
+        function cycleFinalText() {
+            finalText.style.transform = 'scale(0.8) rotateX(90deg)';
+            finalText.style.opacity = '0';
+            
+            setTimeout(() => {
+                finalIndex = (finalIndex + 1) % finalOptions.length;
+                finalText.textContent = finalOptions[finalIndex];
+            }, 300);
+            
+            setTimeout(() => {
+                finalText.style.transform = 'scale(1) rotateX(0deg)';
+                finalText.style.opacity = '1';
+            }, 400);
+        }
+
+        // Enhanced observers for special animations
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.id === 'counterDisplay') {
+                    setTimeout(animateCounter, 500);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const finalTextObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.id === 'finalText') {
+                    setTimeout(() => {
+                        setInterval(cycleFinalText, 3500);
+                    }, 1000);
+                    finalTextObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        counterObserver.observe(document.getElementById('counterDisplay'));
+        finalTextObserver.observe(document.getElementById('finalText'));
+
+        // Enhanced Interactive Effects
+        document.querySelectorAll('.shop-item').forEach((item, index) => {
+            item.addEventListener('mouseenter', () => {
+                item.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2))';
+                item.style.transform = 'scale(1.15) translateY(-15px) rotateY(10deg)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))';
+                item.style.transform = 'scale(1) translateY(0) rotateY(0deg)';
+            });
+
+            // Add click effect
+            item.addEventListener('click', () => {
+                item.style.animation = 'none';
+                item.offsetHeight; // Trigger reflow
+                item.style.animation = 'textGlow 0.6s ease-in-out';
+            });
+
+            // Stagger the initial animations
+            item.style.animationDelay = (index * 0.2) + 's';
+        });
+
+        // Add mouse move parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.querySelectorAll('.floating-image').forEach((img, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                img.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Enhanced scroll effects for background
+        let ticking = false;
+        
+        function updateBackgrounds() {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            
+            document.querySelectorAll('.section').forEach((section, index) => {
+                const speed = 0.5 + (index * 0.1);
+                section.style.transform = `translateY(${parallax * speed}px)`;
+            });
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateBackgrounds);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', requestTick);
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+            }
+        });
+
+        // Add touch gestures for mobile
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+                } else {
+                    window.scrollBy({ top: -window.innerHeight * 0.8, behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Performance optimization
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        if (prefersReducedMotion.matches) {
+            document.documentElement.style.setProperty('--animation-duration', '0s');
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animationDuration = '0s';
+                el.style.transitionDuration = '0s';
+            });
+        }
+
+        // Debug mode (press 'D' to toggle)
+        let debugMode = false;
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'd') {
+                debugMode = !debugMode;
+                document.body.style.outline = debugMode ? '2px solid red' : 'none';
+                console.log('Debug mode:', debugMode ? 'ON' : 'OFF');
+            }
+        });
+    </script>
+</body>
+</html>

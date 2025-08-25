@@ -173,20 +173,21 @@
         }
     };
 
-    setInterval(drawMatrix, 33);
     var clicks = 0;
     window.onload = function() {
         const audio = document.getElementById('lemmeno');
         audio.muted = false;
-        alert("BUONGIORNO DA GIUSEPPE!"); 
+        setInterval(drawMatrix, 33);
+       
         document.addEventListener('click', function() {
             clicks++;
             audio.play();
             if (clicks % 4 == 0) { document.getElementById('ohmaga').play(); }
             else { document.getElementById('oh').play(); }
             createPearExplosion(e.pageX, e.pageY);
-
+        alert("BUONGIORNO DA GIUSEPPE!"); 
         });
+
     };
 
     window.addEventListener('wheel', event => {
