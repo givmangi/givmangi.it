@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesi di Laurea - Sistema di Valutazione Culturale</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--gray-100);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Custom scrollbar styling */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+
+        /* Firefox scrollbar */
+        .slide {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.05);
+        }
+
+        /* Debug performance - disable problematic animations */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+            /* Removed heavy third gradient and animation for performance */
+            z-index: -1;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .slide {
+            width: 95%;
+            max-width: 1400px;
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            color: var(--gray-900);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Modern slide header */
+        .slide-header {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+        }
+
+        .slide-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            animation: slideInFromLeft 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 100px;
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 600;
+            color: var(--gray-900);
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 24px 0 16px 0;
+        }
+
+        /* Modern navigation */
+        .navigation {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+            transition: var(--transition);
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            background: var(--gray-50);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Optimized animations using transform and opacity only */
+        .key-stat {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 32px;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Performance-first approach */
+        .key-stat::before {
+            /* Disable floating animation temporarily */
+            display: none;
+        }
+
+        .progress-fill::after {
+            /* Disable shimmer temporarily */
+            display: none;
+        }
+
+        /* Simplified hover effects */
+        .key-stat:hover {
+            transform: translate3d(0, -4px, 0);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translate3d(0, -4px, 0);
+            transition: transform 0.2s ease;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Modern grid layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        /* GPU-accelerated cards */
+        .card {
+            background: var(--light);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -4px;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            transform: translate3d(0, -100%, 0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .card:hover::before {
+            transform: translate3d(0, 0, 0);
+        }
+
+        .card:hover {
+            transform: translate3d(0, -6px, 0);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Status boxes with modern styling */
+        .finding-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .finding-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
+            border-left: 4px solid var(--warning);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-left: 4px solid var(--success);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(248, 113, 113, 0.1) 100%);
+            border-left: 4px solid var(--danger);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .methodology-box {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        /* Enhanced table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        tr:hover td {
+            background: var(--gray-50);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Hardware-accelerated progress bars */
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 16px 0;
+            position: relative;
+            transform: translateZ(0);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left;
+            transform: scaleX(0);
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .progress-fill.animate {
+            transform: scaleX(1);
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: translateX(-100%);
+            animation: hardwareShimmer 2.5s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        @keyframes hardwareShimmer {
+            0% { 
+                transform: translateX(-100%) translateZ(0);
+            }
+            100% { 
+                transform: translateX(100%) translateZ(0);
+            }
+        }
+
+        /* Modern badges */
+        .metric-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin: 0 4px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Enhanced emphasis blocks */
+        .emphasis {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-align: center;
+            margin: 32px 0;
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            position: relative;
+        }
+
+        .emphasis::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        /* Code styling */
+        .code-snippet {
+            background: var(--gray-900);
+            color: var(--gray-100);
+            padding: 24px;
+            border-radius: 12px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            border: 1px solid var(--gray-700);
+            position: relative;
+            overflow: auto;
+        }
+
+        .code-snippet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .formula {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 2px solid var(--warning);
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 24px 0;
+            color: var(--gray-900);
+        }
+
+        /* Responsive typography */
+        ul, ol {
+            margin-left: 24px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 12px 0;
+            font-size: 1rem;
+            color: var(--gray-700);
+        }
+
+        strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Interactive elements */
+        .interactive-demo {
+            background: var(--gray-50);
+            border: 2px dashed var(--primary);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 24px 0;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .interactive-demo:hover {
+            background: rgba(99, 102, 241, 0.05);
+            border-style: solid;
+            transform: scale(1.02);
+        }
+
+        .demo-placeholder {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Print styles */
+        @media print {
+            .navigation { display: none; }
+            .slide {
+                page-break-after: always;
+                height: auto;
+                box-shadow: none;
+                background: white;
+                backdrop-filter: none;
+            }
+            body::before { display: none; }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .slide {
+                width: 95%;
+                padding: 32px 24px;
+            }
+            
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            
+            .navigation {
+                bottom: 20px;
+                padding: 8px 16px;
+            }
+            
+            .nav-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Title slide special styling */
+        .title-slide {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.95) 100%);
+            color: white;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title-slide h1 {
+            -webkit-text-fill-color: white;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 24px;
+        }
+
+        .title-slide .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .title-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .university-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Titolo -->
+        <div class="slide active title-slide">
+            <div class="slide-number">1/12</div>
+            
+            <div class="university-header">
+                <div>
+                    <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0; opacity: 0.95;">UNIVERSITÀ DEGLI STUDI DI TRENTO</h3>
+                    <p style="font-size: 1rem; margin: 8px 0 4px 0; opacity: 0.8;">Dipartimento di Scienze Cognitive</p>
+                    <p style="font-size: 0.9rem; margin: 0; opacity: 0.7;">Corso di Laurea Triennale in Interfacce e Tecnologie della Comunicazione</p>
+                </div>
+                <div class="logo-circle">
+                    <span style="font-size: 28px; font-weight: bold;">UT</span>
+                </div>
+            </div>
+            
+            <h1>Progettazione di <strong>Interfacce</strong> per la Raccolta di <strong>Feedback</strong> nel Settore Culturale</h1>
+            
+            <p class="subtitle">Un Sistema Ibrido per l'Accademia Roveretana degli Agiati</p>
+            
+            <div class="title-card">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div style="text-align: left;">
+                        <p style="font-size: 0.9rem; margin: 0; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px;">Candidato</p>
+                        <p style="font-size: 1.3rem; margin: 8px 0 0 0; font-weight: 600;">Giuseppe Pio Mangiacotti</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 0.9rem; margin: 0; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px;">Relatore</p>
+                        <p style="font-size: 1.3rem; margin: 8px 0 0 0; font-weight: 600;">Prof.ssa Lucia Rodler</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                    <p style="font-size: 1.1rem; margin: 0; opacity: 0.9;">Anno Accademico 2024/2025</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problema di Ricerca -->
+        <div class="slide">
+            <div class="slide-number">2/12</div>
+            <div class="slide-header">
+                <h2>Problema di Ricerca e Obiettivi</h2>
+            </div>
+
+            <div class="finding-box">
+                <h3>Contesto del Problema</h3>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    L'Accademia Roveretana degli Agiati (fondata nel 1750) necessitava di un sistema strutturato 
+                    per la valutazione della soddisfazione del pubblico per rispondere agli obblighi di 
+                    rendicontazione verso enti finanziatori pubblici.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Sfide Identificate</h3>
+                    <ul>
+                        <li>Assenza di sistema di feedback sistematico</li>
+                        <li>Pubblico eterogeneo (età, scolarizzazione)</li>
+                        <li>Modalità ibride post-COVID (presenza/webinar)</li>
+                        <li>Necessità di metriche quantitative per rendicontazione</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Obiettivi del Progetto</h3>
+                    <ul>
+                        <li><strong>Progettare</strong> interfacce user-centered per feedback</li>
+                        <li><strong>Implementare</strong> sistema ibrido cartaceo-digitale</li>
+                        <li><strong>Sviluppare</strong> metriche innovative di engagement</li>
+                        <li><strong>Validare</strong> statisticamente i risultati</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="methodology-box">
+                <h3>Approccio Metodologico</h3>
+                <p>Ricerca empirica basata su <strong>User-Centered Design</strong> e <strong>analisi quantitativa rigorosa</strong>, 
+                   integrando principi di Human-Computer Interaction con tecniche statistiche avanzate per la validazione dei risultati.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Analisi Demografica -->
+        <div class="slide">
+            <div class="slide-number">3/12</div>
+            <div class="slide-header">
+                <h2>Caratteristiche del Campione di Studio</h2>
+            </div>
+
+            <div class="finding-box">
+                <h3>Dataset Empirico</h3>
+                <p>Campione primario di <strong>92 partecipanti</strong> dal pubblico ordinario dell'Accademia, 
+                   con tasso di risposta del <strong>42.3%</strong> che dimostra l'efficacia del design user-centered.</p>
+            </div>
+
+            <div class="interactive-demo">
+                <h4 style="color: var(--primary); margin-bottom: 16px;">Figura 1: Panoramica Demografica del Campione</h4>
+                <div class="demo-placeholder">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">📊 Visualizzazione Interattiva</div>
+                        <p style="margin: 0;">Distribuzione per Età, Status Socio, Scolarizzazione</p>
+                        <p style="font-size: 0.9rem; margin: 8px 0 0 0; opacity: 0.7;">[demographic_overview_panel.png - generato dall'analisi]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Struttura Anagrafica</h3>
+                    <ul>
+                        <li><strong>51-70 anni:</strong> 43.5% (fascia dominante)</li>
+                        <li><strong>>70 anni:</strong> 21.7% (core storico)</li>
+                        <li><strong>31-50 anni:</strong> 19.6% (transizione)</li>
+                        <li><strong>14-30 anni:</strong> 15.2% (engagement giovanile)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Profilo Culturale</h3>
+                    <ul>
+                        <li><strong>63% laureati</strong> - Pubblico altamente scolarizzato</li>
+                        <li><strong>16.3% soci</strong> - Nucleo istituzionale consolidato</li>
+                        <li><strong>Correlazione età-membership = 1.000</strong></li>
+                        <li>Pipeline generazionale naturale identificata</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="methodology-box">
+                <h3>Implicazioni per il Design dell'Interfaccia</h3>
+                <p>Il profilo demografico ha informato le scelte progettuali: <strong>sistema ibrido cartaceo-digitale</strong> 
+                   per garantire accessibilità universale nonostante l'eterogeneità generazionale, mantenendo coerenza 
+                   metodologica per la comparabilità dei dati.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Design dell'Interfaccia -->
+        <div class="slide">
+            <div class="slide-number">4/12</div>
+            <div class="slide-header">
+                <h2>Progettazione dell'Interfaccia Utente</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Principi di Design Applicati</h3>
+                    <ul>
+                        <li><strong>Accessibilità universale:</strong> formato cartaceo per utenti non-digitali</li>
+                        <li><strong>Semplicità cognitiva:</strong> massimo 9 domande per evitare sovraccarico</li>
+                        <li><strong>Consistenza visiva:</strong> branding istituzionale dell'Accademia</li>
+                        <li><strong>Feedback progressivo:</strong> domande a complessità crescente</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Architettura dell'Informazione</h3>
+                    <ul>
+                        <li>Domande demografiche (età, istruzione, status)</li>
+                        <li>Soddisfazione su scala Likert (1-3)</li>
+                        <li>Elementi di gradimento (scelta multipla)</li>
+                        <li>Feedback qualitativi (campo aperto)</li>
+                        <li>Canali di comunicazione (efficacia marketing)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>Innovazione Tecnologica: Sistema Ibrido</h3>
+                <p>Il sistema combina <strong>moduli cartacei tradizionali</strong> per eventi in presenza con 
+                   <strong>questionari digitali</strong> per webinar, garantendo coerenza metodologica e 
+                   comparabilità dei dati indipendentemente dalla modalità di fruizione.</p>
+            </div>
+
+            <div class="finding-box">
+                <h3>Validazione Empirica del Design</h3>
+                <p><strong>Tasso di risposta: 42.3%</strong> (128 risposte su 302 partecipanti) - 
+                   significativamente superiore alla media del settore culturale (20-30%), 
+                   dimostrando l'efficacia dell'approccio user-centered nella progettazione dell'interfaccia.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Metodologia -->
+        <div class="slide">
+            <div class="slide-number">5/12</div>
+            <div class="slide-header">
+                <h2>Metodologia di Ricerca e Analisi</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="key-stat">
+                    <span class="stat-number">128</span>
+                    <span class="stat-label">Rispondenti Totali</span>
+                </div>
+                <div class="key-stat">
+                    <span class="stat-number">92</span>
+                    <span class="stat-label">Campione Primario</span>
+                </div>
+                <div class="key-stat">
+                    <span class="stat-number">42.3%</span>
+                    <span class="stat-label">Tasso di Risposta</span>
+                </div>
+            </div>
+
+            <h3>Framework di Analisi Statistica</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metodologia</th>
+                        <th>Applicazione</th>
+                        <th>Rationale Scientifico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Test Esatto di Fisher</strong></td>
+                        <td>Paradosso digitale</td>
+                        <td>Distribuzione non-normale, campioni piccoli</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Correlazione di Spearman</strong></td>
+                        <td>Età-membership</td>
+                        <td>Relazioni monotone, dati ordinali</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bootstrap Resampling</strong></td>
+                        <td>Validazione CES</td>
+                        <td>Indicatori compositi, distribuzione ignota</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regressione Logistica</strong></td>
+                        <td>Controllo confounding</td>
+                        <td>Validazione cross-metodologica</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="methodology-box">
+                <h3>Rigor Scientifico</h3>
+                <p>Ogni finding è validato con <strong>multiple metodologie convergenti</strong>, seguendo 
+                   le best practices per la ricerca empirica in Human-Computer Interaction. 
+                   L'approccio conservativo minimizza il rischio di falsi positivi.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Paradosso Digitale -->
+        <div class="slide">
+            <div class="slide-number">6/12</div>
+            <div class="slide-header">
+                <h2>Key Finding #1: Il Paradosso di Soddisfazione Digitale</h2>
+            </div>
+            
+            <div class="finding-box">
+                <h3 style="color: var(--danger); text-align: center;">SCOPERTA CONTROINTUITIVA</h3>
+                <p style="text-align: center; font-size: 1.2rem; margin: 20px 0; line-height: 1.5;">
+                    I partecipanti ai <strong>webinar mostrano soddisfazione superiore</strong><br>
+                    rispetto alla partecipazione fisica tradizionale
+                </p>
+            </div>
+
+            <div class="interactive-demo">
+                <h4 style="color: var(--danger); margin-bottom: 16px;">Figura 2: Analisi del Paradosso di Soddisfazione Digitale</h4>
+                <div class="demo-placeholder">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">📊 Distribuzione Soddisfazione per Modalità</div>
+                        <p style="font-size: 0.9rem; margin: 8px 0 0 0; opacity: 0.7;">[digital_satisfaction_paradox_corrected.png]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Modalità Cartacea</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 57.1%;">57.1%</div>
+                    </div>
+                    <p><strong>Molto Soddisfatti:</strong> 57.1%</p>
+                    <p><strong>Media:</strong> 2.571/3.0</p>
+                </div>
+                <div class="card">
+                    <h3>Modalità Webinar</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 89.7%;">89.7%</div>
+                    </div>
+                    <p><strong>Molto Soddisfatti:</strong> 89.7%</p>
+                    <p><strong>Media:</strong> 2.897/3.0</p>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>Validazione Statistica Multipla</h3>
+                <div class="grid-2">
+                    <div>
+                        <p><strong>Test Esatto di Fisher:</strong></p>
+                        <ul>
+                            <li>Odds Ratio = 6.500</li>
+                            <li>p-value = 0.0018 (altamente significativo)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p><strong>Regressione Logistica (controllo):</strong></p>
+                        <ul>
+                            <li>Odds Ratio = 3.951</li>
+                            <li>p-value = 0.0176</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emphasis">
+                <strong>Implicazioni Teoriche:</strong> Il digitale non rappresenta un ripiego tecnologico ma 
+                un'opportunità strategica di potenziamento dell'esperienza culturale.
+            </div>
+        </div>
+
+        <!-- Slide 7: Divario Generazionale -->
+        <div class="slide">
+            <div class="slide-number">7/12</div>
+            <div class="slide-header">
+                <h2>Key Finding #2: Divario Generazionale e Pipeline Naturale</h2>
+            </div>
+
+            <div class="interactive-demo">
+                <h4 style="color: var(--primary); margin-bottom: 16px;">Figura 3: Analisi del Divario Associazionistico Generazionale</h4>
+                <div class="demo-placeholder">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">📊 Engagement Metrics, Heatmap Età×Socio, Conversione</div>
+                        <p style="font-size: 0.9rem; margin: 8px 0 0 0; opacity: 0.7;">[generational_membership_gap.png]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="finding-box">
+                <h3 style="text-align: center; color: var(--primary);">
+                    "L'Accademia non abbassa i propri standard per i giovani,<br>
+                    innalza i giovani ai propri standard"
+                </h3>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fascia d'Età</th>
+                        <th>Partecipanti (%)</th>
+                        <th>Tasso Membership</th>
+                        <th>Engagement Cognitivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>14-30 anni</strong></td>
+                        <td>14 (15.2%)</td>
+                        <td style="color: var(--danger); font-weight: 600;">0%</td>
+                        <td style="color: var(--success); font-weight: 600;">35.7%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>31-50 anni</strong></td>
+                        <td>18 (19.6%)</td>
+                        <td>5.6%</td>
+                        <td>16.7%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>51-70 anni</strong></td>
+                        <td>40 (43.5%)</td>
+                        <td>15.0%</td>
+                        <td>22.5%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>>70 anni</strong></td>
+                        <td>20 (21.7%)</td>
+                        <td style="color: var(--success); font-weight: 600;">40.0%</td>
+                        <td style="color: var(--success); font-weight: 600;">40.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="methodology-box">
+                <h3>Correlazione Perfetta Età-Membership</h3>
+                <p><strong>Coefficiente di Spearman: r = 1.000 (p < 0.001)</strong></p>
+                <p>La correlazione perfetta suggerisce una <strong>pipeline generazionale naturale</strong> 
+                   coerente con i requisiti statutari di eccellenza accademica che richiedono maturazione 
+                   professionale e contributi scientifici significativi.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Cultural Engagement Score -->
+        <div class="slide">
+            <div class="slide-number">8/12</div>
+            <div class="slide-header">
+                <h2>Innovazione Metodologica: Cultural Engagement Score</h2>
+            </div>
+
+            <div class="finding-box">
+                <h3 style="text-align: center;">Prima Metrica Composita per l'Engagement Culturale</h3>
+                <p style="text-align: center; font-size: 1.1rem; margin: 15px 0; line-height: 1.6;">
+                    Indicatore multidimensionale che integra soddisfazione, affiliazione istituzionale 
+                    e engagement cognitivo in un'unica metrica interpretabile.
+                </p>
+            </div>
+
+            <div class="formula">
+                <strong>CES = S × √(1 + M) × √(1 + CEI)</strong>
+                <p style="font-size: 1rem; margin-top: 12px; color: var(--gray-600); font-weight: 400;">
+                    S = Soddisfazione | M = Membership Rate | CEI = Cognitive Engagement Index
+                </p>
+            </div>
+
+            <div class="interactive-demo">
+                <h4 style="color: var(--warning); margin-bottom: 16px;">Figura 4: Analisi del Cultural Engagement Score (CES)</h4>
+                <div class="demo-placeholder">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">📊 Componenti CES, Gauge Score, Validazione Bootstrap</div>
+                        <p style="font-size: 0.9rem; margin: 8px 0 0 0; opacity: 0.7;">[ces_analysis.png - multi-panel con gauge e distribuzione]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h4>Caratteristiche Innovative</h4>
+                    <ul>
+                        <li>Rendimenti decrescenti (√)</li>
+                        <li>Primato della soddisfazione</li>
+                        <li>Range interpretabile (0-2)</li>
+                        <li>Validazione bootstrap</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Componenti Attuali</h4>
+                    <ul>
+                        <li><strong>S:</strong> 0.837 (eccellente)</li>
+                        <li><strong>M:</strong> 0.163 (migliorabile)</li>
+                        <li><strong>CEI:</strong> 0.272 (potenziale)</li>
+                        <li><strong>CES:</strong> 0.962</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Validazione Statistica</h4>
+                    <ul>
+                        <li>Bootstrap: 1000 iterazioni</li>
+                        <li>CI 95%: [0.894, 1.039]</li>
+                        <li>CV: 3.8% (stabile)</li>
+                        <li>48° percentile</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success">
+                <h3>Contributo Scientifico</h3>
+                <p>Il CES rappresenta il <strong>primo tentativo di quantificazione sistematica</strong> 
+                   dell'engagement culturale in istituzioni accademiche, fornendo un framework replicabile 
+                   per valutazioni comparative e longitudinali.</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Risultati Quantitativi -->
+        <div class="slide">
+            <div class="slide-number">9/12</div>
+            <div class="slide-header">
+                <h2>Risultati Quantitativi Principali</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="key-stat">
+                    <span class="stat-number">67.4%</span>
+                    <span class="stat-label">Molto Soddisfatti</span>
+                </div>
+                <div class="key-stat">
+                    <span class="stat-number">0%</span>
+                    <span class="stat-label">Insoddisfatti</span>
+                </div>
+                <div class="key-stat">
+                    <span class="stat-number">63%</span>
+                    <span class="stat-label">Laureati</span>
+                </div>
+            </div>
+
+            <h3>Efficacia dei Canali di Comunicazione</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Canale</th>
+                        <th>Efficacia</th>
+                        <th>Insight Strategico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Invito socio/a</strong></td>
+                        <td><span class="metric-badge" style="background: var(--success);">25.0%</span></td>
+                        <td>Mediazione interpersonale più efficace</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Newsletter</strong></td>
+                        <td><span class="metric-badge" style="background: var(--accent);">21.2%</span></td>
+                        <td>Canale diretto istituzionale solido</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Passaparola</strong></td>
+                        <td><span class="metric-badge" style="background: var(--warning);">15.4%</span></td>
+                        <td>Amplificazione organica da potenziare</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sito web</strong></td>
+                        <td><span class="metric-badge" style="background: var(--danger);">5.8%</span></td>
+                        <td>Necessità di ottimizzazione SEO/UX</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight">
+                <h3>Osservazione Metodologica</h3>
+                <p><strong>54.6% del pubblico</strong> viene raggiunto attraverso <strong>mediazione interpersonale</strong> 
+                   (inviti diretti + passaparola), dimostrando che i soci fungono da efficaci ambasciatori dell'istituzione.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Contributi Teorici -->
+        <div class="slide">
+            <div class="slide-number">10/12</div>
+            <div class="slide-header">
+                <h2>Contributi Teorici e Metodologici</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Contributi all'HCI</h3>
+                    <ul>
+                        <li><strong>Sistema ibrido inclusivo:</strong> Progettazione per digital divide</li>
+                        <li><strong>User-centered design:</strong> Validazione empirica con tasso risposta 42.3%</li>
+                        <li><strong>Interface design:</strong> Bilanciamento accessibilità-funzionalità</li>
+                        <li><strong>Feedback loop:</strong> Sistema iterativo di miglioramento continuo</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Contributi alla Ricerca Culturale</h3>
+                    <ul>
+                        <li><strong>Cultural Engagement Score:</strong> Prima metrica multidimensionale</li>
+                        <li><strong>Paradosso digitale:</strong> Evidenza empirica contro bias analogici</li>
+                        <li><strong>Pipeline generazionale:</strong> Modellizzazione quantitativa</li>
+                        <li><strong>Framework replicabile:</strong> Metodologia per istituzioni analoghe</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="methodology-box">
+                <h3>Innovazioni Metodologiche</h3>
+                <div class="grid-3">
+                    <div class="card" style="border-left-color: var(--accent);">
+                        <h4>Validazione Bootstrap</h4>
+                        <p>Prima applicazione di resampling non-parametrico per indicatori compositi culturali</p>
+                    </div>
+                    <div class="card" style="border-left-color: var(--success);">
+                        <h4>Multi-test Convergence</h4>
+                        <p>Approccio conservativo con multiple metodologie statistiche</p>
+                    </div>
+                    <div class="card" style="border-left-color: var(--warning);">
+                        <h4>Engagement Operazionalizzato</h4>
+                        <p>Distinzione empirica tra affiliazione e partecipazione intellettuale</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="finding-box">
+                <h3>Impatto Scientifico</h3>
+                <p style="text-align: center; font-size: 1.1rem; line-height: 1.6;">
+                    Questo lavoro dimostra come metodologie <strong>Human-Computer Interaction</strong> 
+                    possano generare insights strategici in contesti culturali tradizionali, 
+                    colmando il gap tra ricerca accademica e applicazioni pratiche.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Direzioni Future -->
+        <div class="slide">
+            <div class="slide-number">11/12</div>
+            <div class="slide-header">
+                <h2>Direzioni Future e Impatto Potenziale</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Sviluppi Tecnologici</h3>
+                    <ul>
+                        <li><strong>Sentiment Analysis:</strong> Automazione analisi feedback qualitativi</li>
+                        <li><strong>Dashboard Real-time:</strong> Monitoraggio continuo engagement</li>
+                        <li><strong>Personalizzazione:</strong> Raccomandazioni eventi basate su profili</li>
+                        <li><strong>Integrazione AI:</strong> Predizione trend partecipazione</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Espansione Metodologica</h3>
+                    <ul>
+                        <li><strong>Studi longitudinali:</strong> Evoluzione engagement nel tempo</li>
+                        <li><strong>Analisi comparativa:</strong> Benchmarking inter-istituzionale</li>
+                        <li><strong>Design partecipativo:</strong> Co-creazione con stakeholder</li>
+                        <li><strong>Mixed methods:</strong> Integrazione qualitativo-quantitativo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="finding-box">
+                <h3>Impatto nel Settore Culturale</h3>
+                <p style="text-align: center; font-size: 1.1rem; line-height: 1.6;">
+                    Il framework sviluppato può <strong>ispirare la modernizzazione gestionale</strong> 
+                    di istituzioni culturali analoghe, dimostrando che tradizione e innovazione 
+                    tecnologica possono coesistere sinergicamente.
+                </p>
+            </div>
+
+            <div class="success">
+                <h3>Scalabilità del Modello</h3>
+                <div class="grid-3">
+                    <div class="card" style="text-align: center;">
+                        <h4>Accademie Storiche</h4>
+                        <p>Applicazione diretta del CES</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Musei e Fondazioni</h4>
+                        <p>Adattamento delle metriche</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Istituzioni Pubbliche</h4>
+                        <p>Framework di valutazione</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emphasis">
+                <strong>Vision:</strong> Trasformare la valutazione culturale da pratica impressionistica 
+                a processo evidence-based, supportando decision-making strategico informato.
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusioni -->
+        <div class="slide">
+            <div class="slide-number">12/12</div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 40px;">Conclusioni</h1>
+                
+                <div class="finding-box" style="max-width: 900px; padding: 40px;">
+                    <h3 style="text-align: center; font-size: 1.6rem; color: var(--primary); margin-bottom: 30px;">
+                        Risultati Conseguiti del Progetto di Tesi
+                    </h3>
+                    
+                    <div style="font-size: 1.1rem; line-height: 1.8; text-align: left;">
+                        <p style="margin: 20px 0;">
+                            ✓ <strong>Sistema validato empiricamente:</strong> Tasso di risposta 42.3% dimostra efficacia del design user-centered
+                        </p>
+                        <p style="margin: 20px 0;">
+                            ✓ <strong>Contributo metodologico innovativo:</strong> Cultural Engagement Score come prima metrica multidimensionale
+                        </p>
+                        <p style="margin: 20px 0;">
+                            ✓ <strong>Scoperte scientificamente robuste:</strong> Paradosso digitale e pipeline generazionale validati statisticamente
+                        </p>
+                        <p style="margin: 20px 0;">
+                            ✓ <strong>Framework replicabile:</strong> Codice open source e metodologia documentata per istituzioni analoghe
+                        </p>
+                    </div>
+                </div>
+
+                <div class="emphasis" style="margin-top: 40px; font-size: 1.3rem; max-width: 800px;">
+                    Questo progetto dimostra come la <strong>ricerca empirica rigorosa</strong> possa generare 
+                    valore strategico concreto anche in domini tradizionalmente resistenti alla quantificazione, 
+                    aprendo nuove frontiere per l'applicazione dell'HCI nel settore culturale.
+                </div>
+
+                <div style="margin-top: 50px;">
+                    <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 16px;">Grazie per l'attenzione</h3>
+                    <div style="background: rgba(99, 102, 241, 0.1); padding: 24px 32px; border-radius: 16px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                        <p style="font-size: 1.2rem; margin: 0; font-weight: 600;">Giuseppe Pio Mangiacotti</p>
+                        <p style="font-size: 1rem; margin: 8px 0 0 0; opacity: 0.8;">giuseppe.mangiacotti@studenti.unitn.it</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Precedente</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Successiva →</button>
+        <button class="nav-btn" onclick="printPresentation()">🖨️ Stampa</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let autoAdvanceTimer;
+        let isPaused = false;
+        let startTime = Date.now();
+        let timerInterval;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            
+            // Trigger animations after slide transition
+            setTimeout(() => {
+                animateStatNumbers();
+                animateProgressBars();
+            }, 100);
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Update progress indicator
+            updateProgress();
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        function scrollSlide(direction) {
+            const quantity = 400;
+            const activeSlide = document.querySelector('.slide.active');
+            activeSlide.scrollBy({ top: direction * quantity, behavior: 'smooth' });
+        }
+
+        function printPresentation() {
+            window.print();
+        }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            // Progress bar could be added here
+            console.log(`Progress: ${Math.round(progress)}%`);
+        }
+
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    changeSlide(1);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    changeSlide(-1);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    scrollSlide(1);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    scrollSlide(-1);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    currentSlide = 0;
+                    showSlide(currentSlide);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    currentSlide = totalSlides - 1;
+                    showSlide(currentSlide);
+                    break;
+                case 'f':
+                case 'F11':
+                    e.preventDefault();
+                    // Fullscreen toggle
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                        });
+                    } else {
+                        document.exitFullscreen();
+                    }
+                    break;
+                case 'p':
+                    e.preventDefault();
+                    pauseAutoAdvance();
+                    break;
+                case 'a':
+                    e.preventDefault();
+                    startAutoAdvance(30);
+                    break;
+            }
+        });
+
+        // Auto-advance functionality
+        function startAutoAdvance(seconds = 30) {
+            if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+            isPaused = false;
+            
+            autoAdvanceTimer = setInterval(() => {
+                if (!isPaused && currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                } else if (currentSlide >= totalSlides - 1) {
+                    clearInterval(autoAdvanceTimer);
+                    console.log('Presentation completed');
+                }
+            }, seconds * 1000);
+            
+            console.log(`Auto-advance started: ${seconds}s per slide`);
+        }
+
+        function pauseAutoAdvance() {
+            isPaused = !isPaused;
+            console.log(isPaused ? 'Auto-advance paused' : 'Auto-advance resumed');
+        }
+
+        // Presentation timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                // Update timer display
+                updateTimerDisplay(minutes, seconds);
+                
+                // Warn when approaching 10 minutes
+                if (minutes >= 9 && seconds >= 30 && !window.timeWarningShown) {
+                    console.warn('Presentation approaching 10 minutes');
+                    window.timeWarningShown = true;
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(minutes, seconds) {
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            const timerElement = document.getElementById('presentationTimer');
+            if (timerElement) {
+                timerElement.textContent = timeString;
+            }
+        }
+
+        // Performance debugging system
+        let performanceMetrics = {
+            animationFrames: 0,
+            lastCheck: Date.now(),
+            fps: 0
+        };
+
+        function debugPerformance() {
+            performanceMetrics.animationFrames++;
+            const now = Date.now();
+            const timeDiff = now - performanceMetrics.lastCheck;
+            
+            if (timeDiff >= 1000) {
+                performanceMetrics.fps = Math.round((performanceMetrics.animationFrames * 1000) / timeDiff);
+                console.log(`FPS: ${performanceMetrics.fps}, Browser: ${navigator.userAgent.slice(0, 50)}`);
+                
+                if (performanceMetrics.fps < 30) {
+                    console.warn('Performance issue detected! FPS below 30');
+                    disableHeavyAnimations();
+                }
+                
+                performanceMetrics.animationFrames = 0;
+                performanceMetrics.lastCheck = now;
+            }
+            
+            requestAnimationFrame(debugPerformance);
+        }
+
+        function disableHeavyAnimations() {
+            console.log('Disabling heavy animations for better performance');
+            
+            // Disable all pseudo-element animations
+            const style = document.createElement('style');
+            style.textContent = `
+                .key-stat::before,
+                .progress-fill::after,
+                .demo-placeholder::before {
+                    display: none !important;
+                }
+                
+                .card::before {
+                    transition: none !important;
+                }
+                
+                * {
+                    animation-duration: 0s !important;
+                    animation-delay: 0s !important;
+                    transition-duration: 0.1s !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Simplified animations for better compatibility
+        function animateStatNumbers() {
+            const statNumbers = document.querySelectorAll('.slide.active .stat-number');
+            
+            statNumbers.forEach((stat, index) => {
+                const finalValue = stat.textContent;
+                const numericValue = parseFloat(finalValue.replace(/[^\d.]/g, ''));
+                
+                if (!isNaN(numericValue) && numericValue > 0) {
+                    stat.textContent = '0';
+                    
+                    // Much simpler animation
+                    setTimeout(() => {
+                        let current = 0;
+                        const step = numericValue / 20; // Only 20 steps
+                        const suffix = finalValue.replace(/[\d.]/g, '');
+                        
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= numericValue) {
+                                stat.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                const display = Math.floor(current) + suffix;
+                                stat.textContent = display;
+                            }
+                        }, 100); // Slower updates
+                    }, index * 200);
+                }
+            });
+        }
+
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.slide.active .progress-fill');
+            
+            progressBars.forEach((bar, index) => {
+                bar.classList.remove('animate');
+                setTimeout(() => {
+                    bar.classList.add('animate');
+                }, index * 200 + 300);
+            });
+        }
+
+        function animateCardsEntrance() {
+            // Simplified entrance - no transform, just opacity
+            const cards = document.querySelectorAll('.slide.active .card, .slide.active .key-stat, .slide.active .finding-box');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, index * 100 + 200);
+            });
+        }
+
+        // Initialize presentation with simplified approach
+        function initPresentation() {
+            showSlide(0);
+            startTimer();
+            
+            // Store progress bar target widths
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                const width = bar.style.width;
+                if (width) {
+                    bar.setAttribute('data-width', width);
+                }
+            });
+            
+            console.log('Presentation initialized');
+            console.log('Controls: Space/→ (next), ← (prev), f (fullscreen), p (pause), a (auto)');
+        }
+
+        // Initialize presentation
+        function initPresentation() {
+            showSlide(0);
+            startTimer();
+            setupIntersectionObserver();
+            
+            // Store progress bar target widths
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                const width = bar.style.width;
+                if (width) {
+                    bar.setAttribute('data-width', width);
+                }
+            });
+            
+            console.log('Presentation initialized');
+            console.log('Controls: Space/→ (next), ← (prev), f (fullscreen), p (pause), a (auto)');
+        }
+
+        // Add presentation controls overlay
+        function addPresentationControls() {
+            const controlsHTML = `
+                <div id="presentationControls" style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(15, 23, 42, 0.95);
+                    backdrop-filter: blur(10px);
+                    padding: 12px 16px;
+                    border-radius: 12px;
+                    display: none;
+                    gap: 8px;
+                    z-index: 1001;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    box-shadow: var(--shadow-xl);
+                ">
+                    <button onclick="startAutoAdvance(30)" style="
+                        padding: 6px 12px; 
+                        border: none; 
+                        border-radius: 6px; 
+                        background: var(--primary); 
+                        color: white; 
+                        cursor: pointer;
+                        font-size: 12px;
+                        font-weight: 500;
+                    ">Auto 30s</button>
+                    <button onclick="pauseAutoAdvance()" style="
+                        padding: 6px 12px; 
+                        border: none; 
+                        border-radius: 6px; 
+                        background: var(--warning); 
+                        color: white; 
+                        cursor: pointer;
+                        font-size: 12px;
+                        font-weight: 500;
+                    ">Pause</button>
+                    <span id="slideCounter" style="
+                        color: white; 
+                        font-size: 12px; 
+                        font-weight: 500;
+                        padding: 6px 8px;
+                    "></span>
+                    <span id="presentationTimer" style="
+                        color: var(--accent); 
+                        font-size: 12px; 
+                        font-weight: 600;
+                        padding: 6px 8px;
+                        background: rgba(6, 182, 212, 0.1);
+                        border-radius: 6px;
+                    ">0:00</span>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', controlsHTML);
+            
+            const controls = document.getElementById('presentationControls');
+            
+            // Show controls on hover in top-right corner
+            document.addEventListener('mousemove', (e) => {
+                const showZone = e.clientY < 80 && e.clientX > window.innerWidth - 300;
+                controls.style.display = showZone ? 'flex' : 'none';
+            });
+            
+            // Update slide counter
+            function updateSlideCounter() {
+                const counter = document.getElementById('slideCounter');
+                if (counter) {
+                    counter.textContent = `${currentSlide + 1}/${totalSlides}`;
+                }
+            }
+            
+            // Update counter when slides change
+            setInterval(updateSlideCounter, 100);
+        }
+
+        // Add progress indicator
+        function addProgressIndicator() {
+            const progressHTML = `
+                <div id="progressIndicator" style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background: rgba(255, 255, 255, 0.1);
+                    z-index: 1002;
+                ">
+                    <div id="progressBar" style="
+                        height: 100%;
+                        background: var(--gradient-primary);
+                        width: 0%;
+                        transition: width 0.3s ease;
+                    "></div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('afterbegin', progressHTML);
+            
+            function updateProgressBar() {
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+            }
+            
+            setInterval(updateProgressBar, 100);
+        }
+
+        // Presentation mode enhancements
+        function enterPresentationMode() {
+            document.body.classList.add('presentation-mode');
+            document.documentElement.requestFullscreen().catch(console.log);
+            startAutoAdvance(45); // Slightly longer for presentation
+        }
+
+        // Error handling and recovery
+        window.addEventListener('error', (e) => {
+            console.error('Presentation error:', e.error);
+            // Could implement error recovery here
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initPresentation();
+            addPresentationControls();
+            addProgressIndicator();
+            
+            // Start performance monitoring
+            console.log('Starting performance monitoring...');
+            debugPerformance();
+            
+            // Log system info for debugging
+            console.log('System Info:', {
+                userAgent: navigator.userAgent,
+                hardwareConcurrency: navigator.hardwareConcurrency,
+                deviceMemory: navigator.deviceMemory || 'unknown',
+                pixelRatio: window.devicePixelRatio
+            });
+            
+            // Simple first animation
+            setTimeout(() => {
+                animateCardsEntrance();
+                animateStatNumbers();
+                animateProgressBars();
+            }, 500);
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (timerInterval) clearInterval(timerInterval);
+            if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+        });
+
+        // Prevent context menu during presentation
+        document.addEventListener('contextmenu', (e) => {
+            if (document.fullscreenElement) {
+                e.preventDefault();
+            }
+        });
+
+        // Handle fullscreen changes
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                console.log('Entered fullscreen mode');
+            } else {
+                console.log('Exited fullscreen mode');
+            }
+        });
+    </script>
