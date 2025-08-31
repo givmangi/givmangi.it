@@ -130,6 +130,17 @@
             border-radius: 2px;
         }
 
+        .slide-header>h1 {
+            text-align: center;
+        }
+
+        .centered-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         .title {
             font-size: clamp(2rem, 4vw, 3rem) !important;
             line-clamp: 2;
@@ -233,7 +244,7 @@
         }
 
         .card>* {
-            padding: 2px;
+            /* padding: 2px; */
         }
 
         .slide-number {
@@ -314,7 +325,7 @@
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
             border: 2px solid var(--primary);
             border-radius: 20px;
-            padding: 32px;
+            padding: 12px 32px 32px 32px;
             margin: 24px 0;
             position: relative;
         }
@@ -334,7 +345,7 @@
         .highlight {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
             border-left: 4px solid var(--warning);
-            padding: 24px;
+            padding: 12px 24px 24px 24px;
             border-radius: 12px;
             margin: 24px 0;
         }
@@ -342,7 +353,7 @@
         .success {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
             border-left: 4px solid var(--success);
-            padding: 24px;
+            padding: 12px 24px 24px 24px;
             border-radius: 12px;
             margin: 24px 0;
         }
@@ -350,7 +361,7 @@
         .warning {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(248, 113, 113, 0.1) 100%);
             border-left: 4px solid var(--danger);
-            padding: 24px;
+            padding: 12px 24px 24px 24px;
             border-radius: 12px;
             margin: 24px 0;
         }
@@ -358,7 +369,7 @@
         .methodology-box {
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
             border-left: 4px solid var(--accent);
-            padding: 10px 24px 24px 24px;
+            padding: 12px 24px 24px 24px;
             border-radius: 12px;
             margin: 24px 0;
         }
@@ -400,7 +411,7 @@
 
         .progress-bar {
             width: 100%;
-            height: 12px;
+            height: 8px;
             background: #e5e7eb;
             border-radius: 4px;
             margin: 16px 0;
@@ -1354,9 +1365,10 @@
         <!-- Slide 15: Conclusioni -->
         <div class="slide">
             <div class="slide-number">15/16</div>
-            <div style="display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; height: 100%; text-align: center;">
+            <div class="slide-header">
                 <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 40px;">Conclusioni</h1>
-                
+            </div>
+            <div class="centered-container">
                 <div class="finding-box" style="max-width: 900px; padding: 40px;">
                     <h3 style="text-align: center; font-size: 1.6rem; color: var(--primary); margin-bottom: 30px;">
                         Risultati Conseguiti del Progetto di Tesi
@@ -1387,6 +1399,7 @@
             </div>
         </div>
 
+        <!-- Slide 16: saluti e ringraziamenti -->
         <div class="slide">
             <div class="slide-number">16/16</div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -1394,7 +1407,7 @@
                     Grazie per l'attenzione!
                 </h1>
                 
-                <div class="finding-box" style="width: 80%; text-align: center; padding: 30px;">
+                <div class="finding-box" style="width: 70%; text-align: center; padding: 20px 30px 30px 30px;">
                     <h3 style="font-size: 1.5em; color: var(--primary); margin-bottom: 20px;">
                         Domande e Approfondimenti
                     </h3>
@@ -1406,7 +1419,7 @@
                         </strong>
                     </p>
                 </div>
-                <div class="emphasis" style="margin-top: 30px; width: 80%;">
+                <div class="emphasis" style="margin-top: 30px; width: 70%;">
                     Il codice sorgente Python utilizzato per l'analisi statistica, la validazione bootstrap e altro è interamente open source e disponibile su GitHub.
                     <br>
                     <a href="https://github.com/givmangi/data_analysis_questionari_accademia_agiati" target="_blank" rel="noopener noreferrer" style="color:var(--secondary); font-weight: bold; text-decoration: none; display: block; margin-top: 15px; font-size: 1.2em;">
@@ -1431,6 +1444,7 @@
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
+        
 
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove('active'));
@@ -1504,10 +1518,8 @@
             }
         });
 
-        // Initialize presentation
         document.addEventListener('DOMContentLoaded', () => {
             showSlide(0);
-            console.log('Presentation initialized - 15 slides for 110 e Lode');
             console.log('Controls: Space/→ (next), ← (prev), f (fullscreen)');
         });
     </script>
