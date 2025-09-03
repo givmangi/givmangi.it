@@ -680,7 +680,7 @@
                 <h2>Framework Teorico e Letteratura di Riferimento</h2>
             </div>
 
-            <div class="grid-2">
+            <div class="grid-3">
                 <div class="card">
                     <h3>Customer Satisfaction Theory</h3>
                     <ul>
@@ -698,15 +698,15 @@
                         <li><strong>Sistemi di feedback:</strong> Ottimizzazione dell'esperienza utente</li>
                     </ul>
                 </div>
-            </div>
-            <div class="card">
-                <h3>Technology Acceptance Model</h3>
-                <ul>
-                    <li><strong>Davis (1989):</strong> Usabilità e utilità percepita</li>
-                    <li><strong>Venkatesh et al. (2003):</strong> Teoria unificata dell'accettazione e uso di tecnologia (UTAUT)</li>
-                    <li><strong>Fattori d'adozione:</strong> Fattori sociali e individuali</li>
-                    <li><strong>Resistenza al cambiamento:</strong> Barriere all'adozione della tecnologia</li>
-                </ul>
+                <div class="card">
+                    <h3>Technology Acceptance Model</h3>
+                    <ul>
+                        <li><strong>Davis (1989):</strong> Usabilità e utilità percepita</li>
+                        <li><strong>Venkatesh et al. (2003):</strong> Teoria unificata dell'accettazione e uso di tecnologia (UTAUT)</li>
+                        <li><strong>Fattori d'adozione:</strong> Fattori sociali e individuali</li>
+                        <li><strong>Resistenza al cambiamento:</strong> Barriere all'adozione della tecnologia</li>
+                    </ul>
+                </div>
             </div>
 
 
@@ -734,7 +734,109 @@
             </div>
         </div>
 
-        <!-- Slide 4: Problema di Ricerca -->
+                <!-- Slide 4: Processo Iterativo di Progettazione -->
+        <div class="slide">
+            <div class="slide-number">4/16</div>
+            <div class="slide-header">
+                <h2>Processo Iterativo di Progettazione dell'Interfaccia</h2>
+            </div>
+
+            <div class="finding-box">
+                <h3>Approccio User-Centered Design Documentato</h3>
+                <p style="font-size: 1.1rem; line-height: 1.6; text-align: center;">
+                    Progettazione rigorosa attraverso <strong>tre fasi iterative</strong> documentate, 
+                    guidata dai principi di UX Design (Nielsen, 1993) e ottimizzazione cognitiva
+                </p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card" style="border-left: 4px solid var(--danger);">
+                    <h3>Fase 1: Prototipazione Esplorativa</h3>
+                    <ul>
+                        <li><strong>15 domande</strong> - Struttura multi-pagina</li>
+                        <li><strong>Scale Likert 5 punti</strong> - Due batterie separate</li>
+                        <li><strong>Matrice complessa</strong> - 6 dimensioni specifiche</li>
+                        <li><strong>Tempo >5 minuti</strong> - Approccio accademico-analitico</li>
+                    </ul>
+                    <div class="warning">
+                        <p><strong>Criticità identificate:</strong> Discontinuità UX, ambiguità scale, complessità eccessiva</p>
+                    </div>
+                </div>
+                
+                <div class="card" style="border-left: 4px solid var(--warning);">
+                    <h3>Fase 2: Semplificazione Progressiva</h3>
+                    <ul>
+                        <li><strong>9 domande</strong> - Formato monopagina</li>
+                        <li><strong>Scale ridotte 5→4→3</strong> - Eliminazione bias punto medio</li>
+                        <li><strong>Evitare Extremeness Aversion</strong> - Scelte deliberate</li>
+                        <li><strong>Ottimizzazione cognitiva</strong> - Pattern naturali</li>
+                    </ul>
+                    <div class="methodology-box">
+                        <p><strong>Base teorica:</strong> Akbari et al. (2024), Neumann et al. (2016)</p>
+                    </div>
+                </div>
+                
+                <div class="card" style="border-left: 4px solid var(--success);">
+                    <h3>Fase 3: Standardizzazione Finale</h3>
+                    <ul>
+                        <li><strong>Struttura definitiva</strong> - 9 domande bilanciate</li>
+                        <li><strong>Progressione logica</strong> - Flusso cognitivo naturale</li>
+                        <li><strong>Economia cognitiva</strong> - Effort minimization</li>
+                        <li><strong>Design evolutivo</strong> - Pattern riconosciuti</li>
+                    </ul>
+                    <div class="success">
+                        <p><strong>Risultato:</strong> Response rate 42.3% (vs 20-30% settore)</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Principi UX Applicati (Nielsen, 1993)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Principio UX</th>
+                        <th>Implementazione Specifica</th>
+                        <th>Rationale Cognitivo</th>
+                        <th>Validazione Empirica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Semplicità Cognitiva</strong></td>
+                        <td>Limite 9 domande, monopagina</td>
+                        <td>Capacità attentiva limitata (Simon et al., 2023)</td>
+                        <td>Durata <3 minuti</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Riconoscimento vs Ricordo</strong></td>
+                        <td>Codici visivi universali, interfaccia Zoom nativa</td>
+                        <td>Schemi mentali preesistenti</td>
+                        <td>Eliminazione confusione procedurale</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sistema-Mondo Reale</strong></td>
+                        <td>Flusso: demografica→esperienza→valutazione→proposte</td>
+                        <td>Processamento informazione naturale</td>
+                        <td>Coerenza interna risposte</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accessibilità Universale</strong></td>
+                        <td>Font Aptos 11pt, contrasto elevato, WCAG 2.1</td>
+                        <td>Digital divide generazionale</td>
+                        <td>Sistema ibrido efficace</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight">
+                <h3>Innovazione del Sistema Ibrido</h3>
+                <p>Combinazione di <strong>moduli cartacei tradizionali</strong> con <strong>questionari digitali Zoom</strong>, 
+                garantendo coerenza metodologica e comparabilità dei dati. L'approccio multimodale maximizza l'adozione 
+                applicando il principio TAM di segmentazione utenza con soglie di accettazione tecnologica differenziate.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Problema di Ricerca
         <div class="slide">
             <div class="slide-number">4/16</div>
             <div class="slide-header">
@@ -775,7 +877,7 @@
                 <p>Ricerca empirica basata su <strong>User-Centered Design</strong> e <strong>analisi quantitativa rigorosa</strong>, 
                    integrando principi di Human-Computer Interaction con tecniche statistiche avanzate per la validazione dei risultati.</p>
             </div>
-        </div>
+        </div> -->
 
         <!-- Slide 5: Design dell'Interfaccia -->
         <div class="slide">
